@@ -6,7 +6,7 @@ CREATE TABLE users(
     passwordHash varchar (255) NOT NULL
 );
 
-CREATE TABLE record(
+CREATE TABLE records(
     recordId integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY NOT NULL,
     concept varchar (100),
     dateHour date NOT NULL,
@@ -14,3 +14,6 @@ CREATE TABLE record(
     method bytea NOT NULL,
     author integer REFERENCES users (userId)
 );
+
+insert into users values
+('leoda','Dangeli', 'leodangeli11@gmail.com','passwordhash')

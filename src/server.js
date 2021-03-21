@@ -7,7 +7,7 @@ app.set('port', process.env.PORT || 3000)
 //Middleweares
 
 //Routes
-app.use('/', require('./app'))
+
 // Statics Files
 
 //Port on listen 
