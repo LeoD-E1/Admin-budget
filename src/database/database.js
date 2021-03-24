@@ -6,14 +6,6 @@ const config = {
   password: '',
   database: 'budget'
 }
-
 const pool = new Pool(config)
 
-const getUsers = async(req, res) => {
-  const response = await pool.query('select * from users');
-  res.json(response.rows);
-}
-
-module.exports = {
-  getUsers
-}
+module.exports = pool;

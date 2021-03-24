@@ -1,11 +1,13 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 
 // Configuration
 app.set('port', process.env.PORT || 3000)
 
 //Middleweares
 app.use(express.json())
+app.use(morgan('dev'))
 // para datos que vienen desde formularios, recibo solo datos basicos
 app.use(express.urlencoded({extended: false}))
 
