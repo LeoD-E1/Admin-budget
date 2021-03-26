@@ -1,6 +1,7 @@
-const express = require('express')
+import express from 'express';
+import morgan from 'morgan';
+
 const app = express()
-const morgan = require('morgan')
 
 // Configuration
 app.set('port', process.env.PORT || 3000)

@@ -17,12 +17,11 @@ CREATE TABLE users(
 CREATE TABLE records(
     recordId SERIAL PRIMARY KEY,
     concept varchar (100),
-    dateHour date NOT NULL,
+    date date NOT NULL,
     amount float NOT NULL,
-    method bytea NOT NULL,
-    author integer REFERENCES users (userId)
+    method bytea NOT NULL
 );
-
+-- author integer REFERENCES users (userId)
 insert into users (userName, email, passwordHash) values
     ('leoda','leodangeli11@gmail.com','passwordhash'),
     ('jesus','apache@gmail.com', 'apachepass'),
