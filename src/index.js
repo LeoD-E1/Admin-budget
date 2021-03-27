@@ -10,7 +10,7 @@ app.set('port', process.env.PORT || 3000)
 app.use(express.json())
 app.use(morgan('dev'))
 // para datos que vienen desde formularios, recibo solo datos basicos
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
 
 //Routes
 app.use('/users', require('./routes/users.routes'))

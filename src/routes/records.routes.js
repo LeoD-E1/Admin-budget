@@ -1,11 +1,8 @@
-const express = require('express')
-const router = express.Router();
-const path = require('path')
+import { Router } from 'express';
+import { getRecords } from '../controllers/records.controller';
 
-router.get('/', (req, res) => {
-    res.json({
-        message: 'Transaction aproved'
-    })
-})
+const router = Router();
+
+router.get('/', getRecords)
 
 module.exports = router;
