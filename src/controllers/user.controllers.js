@@ -1,4 +1,4 @@
-import { pool } from '../database/database';
+import pool from '../database/database';
 
 const getUserByUsername = async (req, res) => {
   try {
@@ -26,7 +26,7 @@ const createUser = async (req, res) => {
   try {
     console.log(req.body)
     const { username, email, password } = req.body
-    const response = await pool.query('INSERT INTO users (userName, email, passwordHash) VALUES($1, $2, $3)', [username, email, password])
+    const response = await pool.query('INSERT INTO users (username, email, passwordHash) VALUES($1, $2, $3)', [username, email, password])
     console.log(response.rows)
     res.send(`El usuario ${req.body.username} ha sido guardado correctamente`)
   } catch (err) {

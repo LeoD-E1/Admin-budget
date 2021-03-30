@@ -1,12 +1,12 @@
 import { Pool } from 'pg';
 
 const config = {
-  user: 'ṕostgres',
   host: 'localhost',
-  password: 'hola',
-  database: 'budget'
+  user: 'postgres',
+  password: '',
+  database: 'budget',
+  port: '5432'
 }
 
 const pool = new Pool(config)
-
-module.exports = pool;
+export default pool;

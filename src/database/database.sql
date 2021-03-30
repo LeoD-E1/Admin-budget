@@ -14,7 +14,7 @@ CREATE TABLE users(
 CREATE TABLE records(
   recordId SERIAL PRIMARY KEY,
   concept varchar (100),
-  date date NOT NULL,
+  date TIMESTAMP default CURRENT_TIMESTAMP,
   amount float NOT NULL,
   method INTEGER REFERENCES methodType(methodId),
   author INTEGER REFERENCES users (userId),
@@ -51,11 +51,20 @@ values (
     'romerogmail.com',
     'romeropass'
   );
-insert into records (concept, dateHour, amount, method, author)
+INSERT INTO records (concept, date, amount, method, author, category)
 values (
     'Transaction',
     '2021/03/22',
     17.000,
-    'Ingreso',
-    1
+    1,
+    1,
+    2
   );
+INSERT INTO category(category)
+VALUES('Comida'),
+  ('Super mercado'),
+  ('Lujos'),
+  ('Dulces');
+INSERT INTO methodType(methodId, methodname)
+VALUES(0, 'Egreso'),
+  (1, 'Ingreso');
