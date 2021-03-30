@@ -21,13 +21,17 @@ const getByCategory = async (req, res) => {
 }
 
 const createRecord = async (req, res) => {
-  console.log(req.body)
-  const { concept, amount, method, author, category } = req.body;
-  const response = await pool.query('INSERT INTO records (concept, amount, method, author, category) VALUES($1, $2, $3, $4, $5)', [
-    concept, amount, method, author, category
-  ]);
-  console.log(response.rows);
-  res.json({ item: response.rows })
+  try {
+    console.log(req.body)
+    const { concept, amount, method, author, category } = req.body;
+    const response = await pool.query('INSERT INTO records (concept, amount, method, author, category) VALUES($1, $2, $3, $4, $5)', [
+      concept, amount, method, author, category
+    ]);
+    console.log(response.rows);
+    res.send(`The record ${req.body.concept} has been created`)
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 module.exports = {
