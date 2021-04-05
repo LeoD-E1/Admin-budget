@@ -1,4 +1,5 @@
 import pool from '../database/database';
+import bcrypt, { hash } from 'bcrypt';
 
 const getUserByUsername = async (req, res) => {
   try {
@@ -13,9 +14,9 @@ const getUserByUsername = async (req, res) => {
 const updateUserById = async (req, res) => {
   try {
     const id = req.params.id
-    const { username, email, password } = req.body;
-    const response = await pool.query('UPDATE users SET userName = $1, email = $2, passwordHash= $3 WHERE userId = $4', [username, email, password, id])
-    console.log(id, username, email, password)
+    const { username, password } = req.body;
+    const response = await pool.query('UPDATE users SET username = $1, password = $2 WHERE userId = $3', [username, password, id])
+    console.log(id, username, password)
     res.send(`user ${id} updated successfully`)
   } catch (err) {
     console.log(err)
@@ -24,7 +25,6 @@ const updateUserById = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    console.log(req.body)
     const { username, email, password } = req.body
     const response = await pool.query('INSERT INTO users (username, email, passwordHash) VALUES($1, $2, $3)', [username, email, password])
     console.log(response.rows)
@@ -53,6 +53,17 @@ const getUsers = async (req, res) => {
   } catch (err) {
     console.log(err)
   }
+}
+
+const updatePassword = async (req, res) => {
+  const id = req.params.id
+  const { password } = req.body
+  await bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(password, salt, (err, hash) => {
+      const response = pool.query('UPDATE users SET password = $1 WHERE userId = $2', [hash, id])
+      res.send('Password has been updated successfully')
+    })
+  })
 
 }
 
@@ -61,5 +72,6 @@ module.exports = {
   updateUserById,
   createUser,
   deleteUserById,
-  getUsers
+  getUsers,
+  updatePassword
 }
