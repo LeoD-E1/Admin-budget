@@ -11,13 +11,13 @@ const getUserByUsername = async (req, res) => {
   }
 }
 
-const updateUserById = async (req, res) => {
+const updateUsername = async (req, res) => {
   try {
     const id = req.params.id
-    const { username, password } = req.body;
-    const response = await pool.query('UPDATE users SET username = $1, password = $2 WHERE userId = $3', [username, password, id])
-    console.log(id, username, password)
-    res.send(`user ${id} updated successfully`)
+    const { username } = req.body;
+    const response = await pool.query('UPDATE users SET username = $1 WHERE userId = $2', [username, id])
+    console.log(id, username)
+    res.send(`user ${username} updated successfully`)
   } catch (err) {
     console.log(err)
   }
@@ -69,9 +69,9 @@ const updatePassword = async (req, res) => {
 
 module.exports = {
   getUserByUsername,
-  updateUserById,
+  updateUsername,
+  updatePassword,
   createUser,
   deleteUserById,
-  getUsers,
-  updatePassword
+  getUsers
 }
