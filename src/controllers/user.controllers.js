@@ -1,6 +1,5 @@
 import pool from '../database/database';
 import bcrypt, { hash } from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
 const getUserByUsername = async (req, res) => {
   try {
@@ -27,7 +26,7 @@ const updateUsername = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const { username, email, password } = req.body
-    const response = await pool.query('INSERT INTO users (username, email, passwordHash) VALUES($1, $2, $3)', [username, email, password])
+    const response = await pool.query('INSERT INTO users (username, email, password) VALUES($1, $2, $3)', [username, email, password])
     console.log(response.rows)
     res.send(`El usuario ${req.body.username} ha sido guardado correctamente`)
   } catch (err) {
@@ -57,14 +56,18 @@ const getUsers = async (req, res) => {
 }
 
 const updatePassword = async (req, res) => {
-  const id = req.params.id
-  const { password } = req.body
-  await bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(password, salt, (err, hash) => {
-      const response = pool.query('UPDATE users SET password = $1 WHERE userId = $2', [hash, id])
-      res.send('Password has been updated successfully')
+  try {
+    const id = req.params.id
+    const { password } = req.body
+    await bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(password, salt, (err, hash) => {
+        const response = pool.query('UPDATE users SET password = $1 WHERE userId = $2', [hash, id])
+        res.send('Password has been updated successfully')
+      })
     })
-  })
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 module.exports = {

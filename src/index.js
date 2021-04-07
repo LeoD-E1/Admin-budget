@@ -25,7 +25,6 @@ app.use('/records', require('./routes/records.routes'))
 app.use('/login', require('./routes/auth.routes'))
 // Statics Files
 
-
 //Port on listen 
 app.listen(app.get('port'), (req, res) => {
     console.log(`Server on port ${app.get('port')}`)
