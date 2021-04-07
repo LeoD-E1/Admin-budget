@@ -1,5 +1,6 @@
 import pool from '../database/database';
 import bcrypt, { hash } from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const getUserByUsername = async (req, res) => {
   try {
@@ -64,7 +65,6 @@ const updatePassword = async (req, res) => {
       res.send('Password has been updated successfully')
     })
   })
-
 }
 
 module.exports = {
