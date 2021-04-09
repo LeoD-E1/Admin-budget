@@ -17,8 +17,8 @@ CREATE TABLE records(
   date TIMESTAMP default CURRENT_TIMESTAMP,
   amount float NOT NULL,
   method INTEGER REFERENCES methodType(methodId),
-  author INTEGER REFERENCES users (userId),
-  category INTEGER REFERENCES category (categoryId)
+  author INTEGER REFERENCES users (userId) ON DELETE CASCADE,
+  category INTEGER REFERENCES category (categoryId) ON DELETE CASCADE
 );
 CREATE TABLE methodType(
   methodId INTEGER PRIMARY KEY,

@@ -1,11 +1,10 @@
 // login y register
 import { Router } from 'express';
-import jwt from 'jsonwebtoken';
+import { login, register } from '../controllers/auth.controller.js'
 
 const router = Router();
 
-router.get('/', (req, res) => {
-    res.json({ "greeting": "Hello" })
-})
+router.post('/signin', login)
+router.post('/signup', register)
 
 module.exports = router;
