@@ -1,2 +1,2 @@
 # Admin-budget
-App web to manage personal budget
+Web App to manage personal budget
