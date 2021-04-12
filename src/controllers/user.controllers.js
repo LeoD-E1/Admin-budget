@@ -4,7 +4,7 @@ import bcrypt, { hash } from 'bcrypt';
 const getUserByUsername = async (req, res) => {
   try {
     const user = req.params.user
-    const response = await pool.query('SELECT * FROM users WHERE userName = $1', [user]);
+    const response = await pool.query('SELECT * FROM users WHERE username = $1', [user]);
     res.json(response.rows);
   } catch (err) {
     console.log(err)
@@ -26,9 +26,12 @@ const updateUsername = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const { username, email, password } = req.body
-    const response = await pool.query('INSERT INTO users (username, email, password) VALUES($1, $2, $3)', [username, email, password])
-    console.log(response.rows)
-    res.send(`El usuario ${req.body.username} ha sido guardado correctamente`)
+    await bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(password, salt, (err, hash) => {
+        const response = pool.query('INSERT INTO users (username, email, password) VALUES($1, $2, $3)', [username, email, hash])
+        res.send(`El usuario ${req.body.username} ha sido guardado correctamente`)
+      })
+    })
   } catch (err) {
     console.log(err)
   }

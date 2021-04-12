@@ -1,13 +1,15 @@
 import express from 'express';
 import morgan from 'morgan';
-import pkg from '../package.json'
+import pkg from '../package.json';
+
 
 const app = express()
 
 // Configuration
 app.set('port', process.env.PORT || 3000)
 
-app.get('/', (req, res) => {
+
+app.get('/', (req, res,) => {
     res.json({
         author: pkg.author
     })
