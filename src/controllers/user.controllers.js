@@ -26,12 +26,17 @@ const updateUsername = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const { username, email, password } = req.body
-    await bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(password, salt, (err, hash) => {
-        const response = pool.query('INSERT INTO users (username, email, password) VALUES($1, $2, $3)', [username, email, hash])
-        res.send(`El usuario ${req.body.username} ha sido guardado correctamente`)
-      })
-    })
+    const isUser = await pool.query('SELECT * FROM users WHERE username = $1', [username])
+
+    if (isUser.rows[0]) {
+      res.send(`'${username}' has already been used`)
+    } else {
+      verifyEmail(email, res)
+      const pash = await encodePassword(password)
+      const response = await pool.query('INSERT INTO users (username, email, password) VALUES ($1, $2, $3)', [username, email, pash])
+      res.json(`User ${username} has been registered successfully`);
+    }
+
   } catch (err) {
     console.log(err)
   }
@@ -62,14 +67,27 @@ const updatePassword = async (req, res) => {
   try {
     const id = req.params.id
     const { password } = req.body
-    await bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(password, salt, (err, hash) => {
-        const response = pool.query('UPDATE users SET password = $1 WHERE userId = $2', [hash, id])
-        res.send('Password has been updated successfully')
-      })
-    })
+    const pash = await encodePassword(password)
+    const response = pool.query('UPDATE users SET password = $1 WHERE userId = $2', [pash, id])
+    res.send('Password has been updated successfully')
+
   } catch (err) {
     console.log(err)
+  }
+}
+
+const encodePassword = async (password) => {
+  const salt = await bcrypt.genSalt(10)
+  const pash = await bcrypt.hash(password, salt)
+  return pash;
+}
+
+const verifyEmail = async (email, res) => {
+  const isEmail = await pool.query('SELECT * FROM users WHERE email = $1', [email])
+  if (isEmail.rows[0]) {
+    res.send('Email has already been used')
+  } else {
+    console.log('email ok')
   }
 }
 
