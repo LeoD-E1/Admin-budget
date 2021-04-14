@@ -7,7 +7,6 @@ const app = express()
 // Configuration
 app.set('port', process.env.PORT || 3000)
 
-
 app.get('/', (req, res,) => {
     res.json({
         author: pkg.author
