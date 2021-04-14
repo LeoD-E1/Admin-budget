@@ -1,6 +1,9 @@
 import express from 'express';
 import morgan from 'morgan';
 import pkg from '../package.json';
+import usersRoutes from './routes/users.routes';
+import authRoutes from './routes/auth.routes';
+import recordsRoutes from './routes/records.routes';
 
 const app = express()
 
@@ -20,9 +23,9 @@ app.use(morgan('dev'))
 app.use(express.urlencoded({ extended: false }))
 
 //Routes
-app.use('/users', require('./routes/users.routes'))
-app.use('/records', require('./routes/records.routes'))
-app.use('/auth', require('./routes/auth.routes'))
+app.use('/users', usersRoutes)
+app.use('/records', recordsRoutes)
+app.use('/auth', authRoutes)
 
 
 // Statics Files
