@@ -20,8 +20,10 @@ See **Deployment** to know how to deploy the project.
 
 ### Instalación 🔧
 
-Onde cloned this repository, go to the path where are this project and run the follows commands
+Once cloned this repository, go to the path where are this project and run the follows commands
+
   **npm install**
+  
 with this you has already to run the project
 
 ---
